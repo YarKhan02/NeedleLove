@@ -19,8 +19,6 @@ export function Home() {
   return (
     <main>
       <section className="hero">
-        <div className="hero-orbit orbit-one" />
-        <div className="hero-orbit orbit-two" />
         <div className="hero-copy">
           <p className="eyebrow">THOUGHTFULLY CRAFTED. JOYFULLY YOURS.</p>
           <h1>

@@ -14,6 +14,8 @@ import { Home } from "./pages/Home";
 import { Shop, ProductDetail } from "./pages/Shop";
 import { Cart, Checkout, OrderConfirmation } from "./pages/Checkout";
 import { Admin } from "./pages/Admin";
+import { initSmoothScroll } from "./smooth";
+import "lenis/dist/lenis.css";
 import "./styles/globals.css";
 function Info() {
   const { page } = useParams();
@@ -74,6 +76,7 @@ function Seo() {
 }
 function App() {
   const { store, error, toast, refresh } = useStore();
+  useEffect(initSmoothScroll, []);
   return (
     <>
       <a href="#main-content" className="skip-link">

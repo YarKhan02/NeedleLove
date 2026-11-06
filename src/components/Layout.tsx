@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useStore } from "../hooks/useStore";
 import { money } from "../types";
+import { lenis } from "../smooth";
 export function Header() {
   const { cart, setDrawer } = useStore(),
     [menu, setMenu] = useState(false),
@@ -154,9 +155,11 @@ export function CartDrawer() {
     if (drawer) {
       d?.showModal();
       document.body.style.overflow = "hidden";
+      lenis?.stop(); // else the page scrolls behind the open bag
     } else {
       d?.close();
       document.body.style.overflow = "";
+      lenis?.start();
     }
     return () => {
       document.body.style.overflow = "";
@@ -229,14 +232,14 @@ export function ScrollManager() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
     if (hash) {
-      setTimeout(
-        () =>
-          document
-            .getElementById(hash.slice(1))
-            ?.scrollIntoView({ behavior: "smooth" }),
-        120,
-      );
-    } else window.scrollTo(0, 0);
+      setTimeout(() => {
+        const target = document.getElementById(hash.slice(1));
+        if (!target) return;
+        if (lenis) lenis.scrollTo(target);
+        else target.scrollIntoView({ behavior: "smooth" });
+      }, 120);
+    } else if (lenis) lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo(0, 0);
   }, [pathname, hash]);
   return null;
 }

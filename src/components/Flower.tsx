@@ -128,7 +128,7 @@ export function FlowerScene() {
           start: "top top",
           end: () =>
             `+=${Math.max(650, targets[3].getBoundingClientRect().top + scrollY - innerHeight * 0.5)}`,
-          scrub: 0.65,
+          scrub: 1,
           invalidateOnRefresh: true,
         },
       });
@@ -149,11 +149,13 @@ export function FlowerScene() {
         tl.to(
           p,
           {
-            x: () => destination(i, "x") * 0.3,
-            y: () => destination(i, "y") * 0.35,
-            rotation: (i - 1.5) * 12,
-            scale: 0.85,
+            // Anticipation: petal lifts and loosens before it drops.
+            x: () => destination(i, "x") * 0.22,
+            y: () => destination(i, "y") * 0.12 - 26,
+            rotation: (i - 1.5) * 20,
+            scale: 1.08,
             duration: 0.27,
+            ease: "power2.out",
           },
           start,
         )
@@ -162,10 +164,10 @@ export function FlowerScene() {
             {
               x: () => destination(i, "x"),
               y: () => destination(i, "y"),
-              rotation: (i % 2 ? 1 : -1) * 30,
+              rotation: (i % 2 ? 1 : -1) * 78,
               scale: 0.3,
               duration: 0.4,
-              ease: "power1.inOut",
+              ease: "power3.in", // gravity: accelerates into the landing
             },
             start + 0.27,
           )
@@ -178,13 +180,13 @@ export function FlowerScene() {
           )
           .to(
             targets[i].querySelector(".arrival-bloom"),
-            { opacity: 0, scale: 1.25, duration: 0.17 },
+            { opacity: 0, scale: 1.55, duration: 0.17 },
             start + 0.75,
           )
           .fromTo(
             targets[i].closest(".product-card"),
-            { opacity: 0.15, scale: 0.95 },
-            { opacity: 1, scale: 1, duration: 0.2 },
+            { opacity: 0.15, scale: 0.9 },
+            { opacity: 1, scale: 1, duration: 0.24, ease: "back.out(1.7)" },
             start + 0.65,
           );
       });

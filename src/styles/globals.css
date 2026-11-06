@@ -169,12 +169,6 @@ img {
   min-height: 710px;
   height: calc(100svh - 100px);
   max-height: 900px;
-  background: radial-gradient(
-    ellipse at 67% 51%,
-    #f2b3c580 0%,
-    #fbe0ea66 31%,
-    transparent 63%
-  );
   isolation: isolate;
 }
 .hero-copy {
@@ -232,25 +226,6 @@ img {
 }
 .button-outline:hover {
   background: var(--background-alt);
-}
-.hero-orbit {
-  position: absolute;
-  border: 1px solid #e9b5c76b;
-  border-radius: 50%;
-  z-index: -1;
-  pointer-events: none;
-}
-.orbit-one {
-  width: 530px;
-  height: 530px;
-  right: 8%;
-  top: 10%;
-}
-.orbit-two {
-  width: 640px;
-  height: 640px;
-  right: 4%;
-  top: 2%;
 }
 .hero-note {
   position: absolute;
@@ -1115,6 +1090,36 @@ input[type="radio"] {
     transform: translateY(0);
   }
 }
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(44px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Scroll-driven reveals: each section lifts in as it enters.
+   @supports-guarded so unsupported browsers just show content. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section-heading,
+    .center-heading,
+    .collection .filter-result,
+    .review-grid > article {
+      animation: rise-in both cubic-bezier(0.22, 1, 0.36, 1);
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+    .review-grid > article:nth-child(2) {
+      animation-range: entry 8% cover 62%;
+    }
+    .review-grid > article:nth-child(3) {
+      animation-range: entry 16% cover 70%;
+    }
+  }
+}
 @media (min-width: 1600px) {
   .hero-copy {
     padding-left: 10%;
@@ -1154,18 +1159,6 @@ input[type="radio"] {
   .hero-note {
     top: 8%;
     right: 5%;
-  }
-  .orbit-one {
-    width: 420px;
-    height: 420px;
-    right: 2%;
-    top: 18%;
-  }
-  .orbit-two {
-    width: 510px;
-    height: 510px;
-    right: 0;
-    top: 12%;
   }
   .section {
     padding: 70px 6%;
@@ -1219,9 +1212,6 @@ input[type="radio"] {
   }
   .hero {
     min-height: 650px;
-  }
-  .hero-orbit {
-    max-width: 55vw;
   }
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1293,7 +1283,6 @@ input[type="radio"] {
     height: 850px;
     min-height: 0;
     max-height: none;
-    background: radial-gradient(ellipse at 50% 58%, #efb3c76b, transparent 60%);
   }
   .hero-copy {
     text-align: center;
@@ -1357,20 +1346,6 @@ input[type="radio"] {
   .fine-line {
     width: 20px;
     flex-shrink: 0;
-  }
-  .orbit-one {
-    width: 320px;
-    height: 320px;
-    max-width: none;
-    top: 410px;
-    right: calc(50% - 160px);
-  }
-  .orbit-two {
-    width: 365px;
-    height: 365px;
-    max-width: 95vw;
-    top: 388px;
-    right: calc(50% - 182.5px);
   }
   .hero-bottom {
     bottom: 25px;
